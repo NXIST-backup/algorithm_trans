@@ -36,6 +36,5 @@ int main()
                 dp[i][j] = dp[i - 1][j];
         }
     }
-    cout << 1 << endl;
     cout << dp[n][w_sum] << endl;
 }

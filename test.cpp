@@ -12,29 +12,34 @@ using namespace std;
 
 typedef long long ll;
 typedef unsigned long long ull;
-const int INF = 1e9;
-typedef pair<int,int> pii;
+const int INF = -1e9 - 50;
+typedef pair<int, int> pii;
 
 const int N = 1050;
-int n, w_sum;
-int w[N], v[N];
-int dp[N][N];
+int n;
+int a[N];
+int dp[N];
+
 int main()
 {
-    cin >> n >> w_sum;
+    cin >> n;
 
-    for (int i = 1;i<=n;i++){
-        cin >> w[i];
-        cin >> v[i];
+    for (int i = 1; i <= n;i++){
+        cin >> a[i];
     }
-
-    for (int i = 1; i <=n;i++){
-        for (int j = 1; j <= w_sum;j++){
-            if(j>=w[i])
-                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j-w[i]] + v[i]);
-            else
-                dp[i][j] = dp[i - 1][j];
+    a[0] = -1e9 - 50;
+    for (int i = 1; i <= n; i++) { //子序列最后一个数字pos为i的
+        for (int j = 0; j < i; j++) {
+            if (a[j] < a[i]) {
+                dp[i] = max(dp[i], dp[j]+1);
+            }
         }
     }
-    cout << dp[n][w_sum] << endl;
+
+    int ans = 0;
+    for (int i = 1;i<=n;i++){
+        ans = max(ans, dp[i]);
+    }
+
+    cout << ans << endl;
 }

@@ -1,11 +1,11 @@
-#include <iostream>
-#include <cstring>
 #include <algorithm>
-#include <queue>
-#include <map>
-#include <unordered_map>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -24,22 +24,20 @@ int main()
 {
     cin >> n;
 
-    for (int i = 1; i <= n;i++){
+    for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
     a[0] = -1e9 - 50;
     for (int i = 1; i <= n; i++) { //子序列最后一个数字pos为i的
         for (int j = 0; j < i; j++) {
             if (a[j] < a[i]) {
-                dp[i] = max(dp[i], dp[j]+1);
+                dp[i] = max(dp[i], dp[j] + 1);
             }
         }
     }
-
     int ans = 0;
-    for (int i = 1;i<=n;i++){
+    for (int i = 1; i <= n; i++) {
         ans = max(ans, dp[i]);
     }
-
     cout << ans << endl;
 }

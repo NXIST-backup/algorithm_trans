@@ -15,10 +15,10 @@ typedef unsigned long long ull;
 const int INF = 1e9;
 typedef pair<int,int> pii;
 
-
 int main()
 {
-    char c;
-    c.getchar();
-    while(c!='\n')
+    int a = 10;
+    a /= a + a;
+
+    cout << a << endl;
 }

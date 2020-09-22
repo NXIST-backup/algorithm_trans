@@ -45,7 +45,6 @@ int main()
             s.push_back(c);
             c = getchar();
         }
-        cout << s << endl;
         int zero = 0;
         for (int i = 0; i < s.size();i++){
             if(s[i]!=' '){

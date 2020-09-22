@@ -15,7 +15,7 @@ typedef unsigned long long ull;
 const int INF = 1e9;
 typedef pair<int,int> pii;
 
-int n;
+ll n;
 
 int main()
 {

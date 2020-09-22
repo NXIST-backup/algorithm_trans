@@ -21,9 +21,7 @@ int main()
 {
     for (int i = 1; i <= 2;i++){
         for (int j = 1; j <= 1010;j++){
-            for (int k = 1; k <= 2020;k++){
-                dp[i][j][k]
-            }
+            
         }
     }
 }

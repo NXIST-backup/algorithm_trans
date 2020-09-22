@@ -18,27 +18,22 @@ typedef pair<int,int> pii;
 const int N = 60;
 int n, m, K;
 int g[N][N];
-int dp[14][144][N][N];
+int dp[N][N][13][13];
 int main()
 {
     cin >> n >> m >> K;
 
     for (int i = 1;i<=n;i++){
-        for (int j = 1;j<=m;j++)
+        for (int j = 1;j<=m;j++){
             cin >> g[i][j];
+            g[i][j]++;
+        }
     }
-
-    for (int k = 0; k <= K;k++){
-        int temp = k;
-        for (int c = 0; c <= 12; c++) {
-            for (int i = 1;i<=n;i++){
-                for (int j = 1;j<=m;j++){
-                    if(g[i][j]>=c&&temp>0)
-                        dp[k][c][i][j] = (dp[k][c][i - 1][j] + dp[k][c][i][j - 1]) % INF,temp--;
-                    if(temp==0)
-                        dp[k][c][i][j] = (dp[k][c][i - 1][j] + dp[k][c][i][j - 1]) % INF;
-                }
-            }
+    dp[1][1][1][g[1][1]] = 1;
+    dp[1][1][0][0] = 1;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m;j++){
+            
         }
     }
 }

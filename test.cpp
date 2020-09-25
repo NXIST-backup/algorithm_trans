@@ -1,14 +1,31 @@
-//Test 5
-#include<cstdio>
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <queue>
+#include <map>
+#include <unordered_map>
+#include <cmath>
+#include <cstdio>
+#include <vector>
 
 using namespace std;
-const int MX=20000000;
-int *it[MX];
-int main(){
-	for(int i=0;i<MX;i++)it[i]=new int;
-	for(int i=0;i<MX;i++)*it[i]=i;
-	int ans=0;
-	for(int i=0;i<MX;i++)ans^=*it[i];
-	printf("%d\n",ans);
-	return 0;
+
+typedef long long ll;
+typedef unsigned long long ull;
+const int INF = 1e9;
+typedef pair<int,int> pii;
+
+int add(int x)
+{
+    int Bit = 0;
+    while (x) {
+        x >>= 1;
+        Bit++;
+    }
+    return Bit;
+}
+int main()
+{
+    int a = 4;
+    cout << add(a) << endl;
 }

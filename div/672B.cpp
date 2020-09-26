@@ -43,7 +43,7 @@ int main()
         ll ans = 0;
         for (int i = 0; i <= 32; i++) {
             if(st[i]>=2){
-                int s = st[i];
+                ll s = st[i];
                 ans += s * (s - 1) / 2;
             }
         }

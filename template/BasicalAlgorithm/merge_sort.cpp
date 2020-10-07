@@ -12,8 +12,8 @@ void mergesort(int *a, int l, int r)
         return;
     int mid = l + r >> 1;
 
-    mergesort(a, l, mid),
-        mergesort(a, mid + 1, r);
+    mergesort(a, l, mid);
+    mergesort(a, mid + 1, r);
 
     int k = 0, i = l, j = mid + 1;
     while (i <= mid && j <= r)

@@ -1,19 +1,19 @@
-#include <iostream>
-#include <cstring>
 #include <algorithm>
-#include <queue>
-#include <map>
-#include <unordered_map>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
 
 typedef long long ll;
 typedef unsigned long long ull;
-const int MOD = 1e9+7;
-typedef pair<int,int> pii;
+const int MOD = 1e9 + 7;
+typedef pair<int, int> pii;
 
 const int N = 1e5 + 50;
 
@@ -22,10 +22,10 @@ int f[N];
 int main()
 {
     string s;
-    
+
     cin >> s;
     f[0] = 1;
-    for (int i = 1; i <= N;i++) {
+    for (int i = 1; i <= N; i++) {
         f[i] = f[i - 1] * 10 % MOD;
     }
     reverse(s.begin(), s.end());

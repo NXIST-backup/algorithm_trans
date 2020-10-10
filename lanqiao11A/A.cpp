@@ -15,13 +15,7 @@ typedef unsigned long long ull;
 const int INF = 1e9;
 typedef pair<int,int> pii;
 
-int dp[3][1013][2020];
-
 int main()
 {
-    for (int i = 1; i <= 2;i++){
-        for (int j = 1; j <= 1010;j++){
-            
-        }
-    }
+    
 }

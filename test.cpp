@@ -33,8 +33,10 @@ void add(int x,int v)
 int pre(int x)
 {
     int res = 0;
-    for (int i = x; i;i-=lowbit(i))
+    for (int i = x; i;i-=lowbit(i)){
         res += c[i];
+        cout << i << " ";
+    }
     return res;
 }
 
@@ -42,12 +44,5 @@ int main()
 {
     cin >> n;
 
-    for (int i = 1; i <= n;i++)
-        cin >> a[i];
-    ll ans = 0;
-    for (int i = n; i >0; i--) {
-        ans += pre(a[i] - 1);
-        add(a[i], 1);
-    }
-    cout << ans << endl;
+
 }

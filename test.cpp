@@ -16,15 +16,16 @@ const int INF = 1e9;
 typedef pair<int,int> pii;
 
 const int N = 1e5 + 50;
-
-int a[N * 2];
-int n,m;
-
+char a[N];
 int main()
 {
-    cin >> n >> m;
-
-    for (int i = 0; i < n + m + 1;i++){
-        
-    }
+  
+  while(c!=)
+  for(int i=0;i<a.size();i++){
+  	if(a[i]!='z'||a[i]!='Z')
+    	a[i]+=1;
+   	else
+      a[i]-=25;
+  }
+ 	cout<<a<<endl;
 }

@@ -18,7 +18,7 @@ typedef pair<int,int> pii;
 
 void fanfa(vector<int> &number,int cishu)
 {
-    for(int i = 1;i<=1000;i++)
+    for(int i = 1;i<=cishu;i++)
     {
         number.push_back(i);
     }
@@ -26,7 +26,7 @@ void fanfa(vector<int> &number,int cishu)
 }
 void fanfa2(vector<int> &number,int t,int sum)
 {
-    srand((unsigned)time(0));
+
     int ns = 0;
     for (int i = 0; i < t - 1;i++){
         ns = rand() % 300+1;
@@ -38,24 +38,15 @@ void fanfa2(vector<int> &number,int t,int sum)
 
 int main()
 {
-    freopen("10.in","w",stdout);
-    int t;
-    cin >> t;
-    cout << t << endl;
-    vector<int> n;
-    vector<int> numbers;
-    fanfa(n, 1000);
+    freopen("14.in","w",stdout);
     srand((unsigned)time(0));
-    for (int i = 0; i < 100;i++) {
-        int s = rand() % 1000 + 1;
-        cout << s << endl;
-        for (int j = 0; j < s;j++){
-            int t = rand() % 10;
-            cout << t;
-        }
-        cout << endl;
+    int n = 199999;
+    cout << n << endl;
+    for (int i = 0; i < n;i++) {
+        int s = rand() % (1000000000-800000000 + 1)+800000000;
+        cout << s << " ";
     }
-
+    cout << endl;
     fclose(stdin);
     fclose(stdout);
     return 0;

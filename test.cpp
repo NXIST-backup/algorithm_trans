@@ -15,93 +15,42 @@ typedef unsigned long long ull;
 const int INF = 1e9;
 typedef pair<int,int> pii;
 
+const int N = 10;
+int st[N][N];
+ll ans = 0;
+int dx[4] = {1, 0, -1, 0};
+int dy[4] = {0, 1, 0, -1};
 
-typedef struct Snode 
+int dfs(int dep,int x,int y)
 {
-    int data; //数据域
-    struct Snode *next; //指针域
-}Snode,*LinkStack;
+    if(dep==16)
+        ans++;
+    for (int i = 0; i < 4;i++){
+        int x1 = x + dx[i], y1 = y + dy[i];
 
- 
-
-bool InitStack(LinkStack &S) //构造一个空栈S
-{
-    S=NULL;
-    return true;
-}
-
- 
-
-bool Push(LinkStack &S, int e) //在栈顶插入元素e
-{
-    LinkStack p;
-    p = new Snode; //生成新结点
-    p->data = e; //将e放在新结点数据域
-    p->next = S; //将新结点的指针域指向S，即将S的地址赋值给新结点的指针域
-    S = p; //修改栈顶指针为p
-    return true;
-}
-
- 
-
-bool Pop(LinkStack &S, int &e) //删除S的栈顶元素，用e保存其值
-
-{
-    LinkStack p;
-    if (S==NULL) //栈空
-        return false;
-    e=S->data; //将栈顶元素赋给e
-    p=S; //用p保存栈顶元素地址，以备释放
-    S=S->next; //修改栈顶指针，指向下一个结点
-    delete p; //释放原栈顶元素的空间
-    return true;
-}
-
- 
-
-int GetTop(LinkStack S) //返回S的栈顶元素，不修改栈顶指针
-{
-    if (S!=NULL) //栈非空
-        return S->data; //返回栈顶元素的值，栈顶指针不变
-    else
-        return -1;
-}
-
-void Reverse(LinkStack &S)
-{
-    int stk[1000] = {0};
-    int idx = 0;
-    int val = 0;
-    bool flag = 1;
-    while(flag){
-        stk[++idx] = GetTop(S);
-        flag = Pop(S, val);
+        if(x1>0&&x1<=4&&y1>0&&y1<=4&&!st[x1][y1]){
+            st[x1][y1] = 1;
+            dfs(dep + 1, x1, y1);
+            st[x1][y1] = 0;
+        }
     }
-    while(--idx){
-        Push(S, stk[idx]);
-    }
+
+    return ans;
 }
+
 int main()
 {
-    LinkStack S;
-    InitStack(S);
+    ll res = 0;
 
-    int n;
-    cin >> n;
-
-    for (int i = 0; i < n;i++){
-        int x;
-        cin >> x;
-        Push(S, x);
+    for (int i = 1; i <= 4;i++){
+        for (int j = 1; j <= 4;j++){
+            ans = 0;
+            memset(st, 0, sizeof st);
+            st[i][j] = 1;
+            res += dfs(1, i, j);
+        }
     }
 
-    bool flag = 1;
-    int tmp = 0;
-    Reverse(S);
-    while(flag){
-        int st = GetTop(S);
-        cout << st << " ";
-        flag = Pop(S, tmp);
-    }
-    cout << endl;
+    cout << res << endl;
 }
+

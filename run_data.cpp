@@ -38,15 +38,14 @@ void fanfa2(vector<int> &number,int t,int sum)
 
 int main()
 {
-    freopen("14.in","w",stdout);
+    freopen("1.in","w",stdout);
     srand((unsigned)time(0));
-    int n = 199999;
-    cout << n << endl;
-    for (int i = 0; i < n;i++) {
-        int s = rand() % (1000000000-800000000 + 1)+800000000;
-        cout << s << " ";
+
+    for (int i = 1; i <= 1000;i++) {
+        for (int j = 1; j <= 1000;j++)
+            cout << 0;
+        cout << endl;
     }
-    cout << endl;
     fclose(stdin);
     fclose(stdout);
     return 0;

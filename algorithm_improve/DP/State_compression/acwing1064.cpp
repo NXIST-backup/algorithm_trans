@@ -69,3 +69,4 @@ int main()
 
     cout << dp[n + 1][K][0] << endl;
 }
+s

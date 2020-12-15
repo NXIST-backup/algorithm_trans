@@ -1,5 +1,5 @@
 /*
-  Problem Name:Super Ryuma
+  Problem Name:increment of coins
   algorithm tag:概率DP,期望DP
 */
 

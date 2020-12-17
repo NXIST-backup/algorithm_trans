@@ -1,35 +1,33 @@
-#include <iostream>
-#include <cstring>
 #include <algorithm>
-#include <queue>
-#include <map>
-#include <unordered_map>
 #include <cmath>
 #include <cstdio>
-#include <vector>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
 #include <stdlib.h>
 #include <time.h>
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
 typedef long long ll;
 typedef unsigned long long ull;
 const int INF = 1e9;
-typedef pair<int,int> pii;
+typedef pair<int, int> pii;
 
-void fanfa(vector<int> &number,int cishu)
+void fanfa(vector<int> &number, int cishu)
 {
-    for(int i = 1;i<=cishu;i++)
-    {
+    for (int i = 1; i <= cishu; i++) {
         number.push_back(i);
     }
-    std::random_shuffle(number.begin(),number.end());
+    std::random_shuffle(number.begin(), number.end());
 }
-void fanfa2(vector<int> &number,int t,int sum)
+void fanfa2(vector<int> &number, int t, int sum)
 {
-
     int ns = 0;
-    for (int i = 0; i < t - 1;i++){
-        ns = rand() % 300+1;
+    for (int i = 0; i < t - 1; i++) {
+        ns = rand() % 300 + 1;
         number.push_back(ns);
         sum -= ns;
     }
@@ -38,13 +36,18 @@ void fanfa2(vector<int> &number,int t,int sum)
 
 int main()
 {
-    freopen("1.in","w",stdout);
+    freopen("1.in", "w", stdout);
     srand((unsigned)time(0));
 
-    for (int i = 1; i <= 1000;i++) {
-        for (int j = 1; j <= 1000;j++)
-            cout << 0;
-        cout << endl;
+    int n = rand() % 300 + 1;
+    cout << n << endl;
+    for (int i = 1; i <= n; i++) {
+        int t = rand() % 10000 + 1;
+        int num = rand() % 10000 + 1;
+        if (t % 2) {
+            num = -num;
+        }
+        cout << num << " ";
     }
     fclose(stdin);
     fclose(stdout);

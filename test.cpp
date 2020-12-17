@@ -1,29 +1,19 @@
-/*
-  Problem Name:
-  algorithm tag:
-*/
-
-#include <algorithm>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <unordered_map>
-#include <vector>
-
+#include <bits/stdc++.h>
+#define int long long
 using namespace std;
-
-typedef long long ll;
-typedef unsigned long long ull;
-const int mod = 1e9 + 7;
-typedef pair<int, int> pii;
-
-int main()
+const int N = 200005;
+int n, a[N], s[N], p[N], mx[N], ans;
+signed main()
 {
-    int x;
-    cin >> x;
-    x = 0 ^ x;
-    cout << x << endl;
+    ios::sync_with_stdio(false);
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        s[i] = s[i - 1] + a[i];
+        p[i] = p[i - 1] + s[i];
+        mx[i] = max(mx[i - 1], s[i]);
+        ans = max(ans, p[i - 1] + mx[i]);
+    }
+    cout << ans << endl;
+    return 0;
 }

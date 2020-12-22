@@ -2,17 +2,14 @@
 //裴蜀定理
 // 对于任意正整数a，b，那么一定存在非0整数x，y，使得ax+by=gcd(a,b)
 
-
-
-
-#include <iostream>
-#include <cstring>
 #include <algorithm>
-#include <queue>
-#include <map>
-#include <unordered_map>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -25,16 +22,15 @@ using namespace std;
 // a*y2+(x2-a/b*y2)*b=a*x1+b*y1
 // x1=y2
 // y1=(x2-a/b*y2)
-int exgcd(int a,int b,int &x1,int &y1)
+int exgcd(int a, int b, int &x1, int &y1)
 {
-    if(!b)
-    {
-        x1=1,y1=0;
+    if (!b) {
+        x1 = 1, y1 = 0;
         return a;
     }
-    int x2,y2;
-    int d=exgcd(b,a%b,x2,y2);
-    x1=y2,y1=x2-(a/b)*y2;
+    int x2, y2;
+    int d = exgcd(b, a % b, x2, y2);
+    x1 = y2, y1 = x2 - (a / b) * y2;
     return d;
 }
 

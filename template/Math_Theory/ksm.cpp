@@ -6,7 +6,7 @@
 //同余运算以及基本性质
 //1、性质：如果a≡b(mod m)，x≡y(mod m)，则a+x≡b+y(mod m)。
 //2、如果a≡b(mod m)，x≡y(mod m)，则ax≡by(mod m)
-//2、如果ac≡bc(mod m)，且c和m互质，则a≡b(mod m)
+//3、如果ac≡bc(mod m)，且c和m互质，则a≡b(mod m)
 #include <algorithm>
 #include <cmath>
 #include <cstdio>

@@ -1,3 +1,8 @@
+/*
+  Problem Name:模板
+  algorithm tag:树状数组
+*/
+
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -12,7 +17,7 @@ using namespace std;
 
 typedef long long ll;
 typedef unsigned long long ull;
-const int INF = 1e9;
+const int mod = 1e9 + 7;
 typedef pair<int, int> pii;
 
 const int N = 1e5 + 50;
@@ -32,7 +37,7 @@ void add(int x, int v)
 int query(int x)
 {
     int res = 0;
-    for (int i = x; i ;i-=lowbit(i))
+    for (int i = x; i; i -= lowbit(i))
         res += tr[i];
     return res;
 }
@@ -46,16 +51,14 @@ int main()
     for (int i = 1; i <= n; i++)
         add(i, a[i]);
 
-
-    while (m--){
+    while (m--) {
         int k, x, y;
 
         cin >> k >> x >> y;
 
-        if(k==0)
+        if (k == 0)
             cout << query(y) - query(x - 1) << endl;
         else
             add(x, y);
     }
-    
 }

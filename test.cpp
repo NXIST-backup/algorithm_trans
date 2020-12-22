@@ -1,19 +1,30 @@
 #include <bits/stdc++.h>
-#define int long long
+typedef long long ll;
 using namespace std;
-const int N = 200005;
-int n, a[N], s[N], p[N], mx[N], ans;
-signed main()
+bool ok;
+int t;
+ll a, b, c, d, e, x, y;
+void euc(ll a, ll b, ll &x, ll &y)
 {
-    ios::sync_with_stdio(false);
-    cin >> n;
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-        s[i] = s[i - 1] + a[i];
-        p[i] = p[i - 1] + s[i];
-        mx[i] = max(mx[i - 1], s[i]);
-        ans = max(ans, p[i - 1] + mx[i]);
+    if (!b) {
+        if (c % a)
+            ok = false;
+        else
+            ok = true;
+        x = c / a, y = 0, d = a;
+    } else
+        euc(b, a % b, y, x), y -= x * (a / b);
+}
+int main()
+{
+    for (scanf("%d", &t); t--;) {
+        scanf("%lld%lld%lld", &b, &c, &a);
+        c = b - c, euc(a, b, x, y);
+        if (ok)
+            e = b / d, printf("%lld", (x % e + e) % e);
+        else
+            printf("-1");
+        putchar('\n');
     }
-    cout << ans << endl;
     return 0;
 }

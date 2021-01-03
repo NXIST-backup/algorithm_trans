@@ -20,7 +20,12 @@ typedef unsigned long long ull;
 const int mod = 1e9 + 7;
 typedef pair<int, int> pii;
 
+int n;
+
 int main()
 {
-    cout << ceil(5 / 4) << endl;
+    cin >> n;
+
+    for (int i = 1; i <= n - 1; i++) {
+    }
 }

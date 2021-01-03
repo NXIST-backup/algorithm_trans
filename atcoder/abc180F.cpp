@@ -19,8 +19,3 @@ typedef long long ll;
 typedef unsigned long long ull;
 const int mod = 1e9 + 7;
 typedef pair<int, int> pii;
-
-int main()
-{
-    cout << ceil(5 / 4) << endl;
-}

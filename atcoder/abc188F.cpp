@@ -1,21 +1,48 @@
-/*
-  Problem Name:
-  algorithm tag:
-*/
-
-#include <algorithm>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <unordered_map>
-#include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 typedef long long ll;
-typedef unsigned long long ull;
-const int mod = 1e9 + 7;
-typedef pair<int, int> pii;
+
+ll x, y;
+map<ll, int> mp;
+
+void bfs(ll y)
+{
+    queue<ll> q;
+    q.push(y);
+
+    while (q.size()) {
+        ll t = q.front();
+        q.pop();
+        if (t % 2) {
+            if (mp[t + 1])
+                mp[t + 1] = min(mp[t] + 1, mp[t + 1]);
+            else {
+                mp[t + 1] = mp[t] + 1;
+                q.push(t + 1);
+            }
+            if (mp[t - 1])
+                mp[t - 1] = min(mp[t] + 1, mp[t - 1]);
+            else {
+                mp[t - 1] = mp[t] + 1;
+                q.push(t - 1);
+            }
+        } else {
+            if (mp[t >> 1])
+                mp[t >> 1] = min(mp[t] + 1, mp[t >> 1]);
+            else {
+                mp[t >> 1] = mp[t] + 1;
+                q.push(t >> 1);
+            }
+        }
+    }
+}
+int main()
+{
+    cin >> x >> y;
+
+    bfs(y);
+
+    cout << mp[x] << endl;
+}

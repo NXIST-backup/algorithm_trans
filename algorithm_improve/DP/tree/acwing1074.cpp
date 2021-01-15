@@ -1,6 +1,6 @@
 /*
   Problem Name:二叉苹果树
-  algorithm tag:树上背包
+  algorithm tag:树上背包，树形DP
 */
 
 #include <algorithm>

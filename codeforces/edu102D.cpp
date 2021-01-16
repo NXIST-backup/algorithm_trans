@@ -1,5 +1,5 @@
 /*
-  Problem Name:
+  Problem Name:Program
   algorithm tag:
 */
 
@@ -20,11 +20,13 @@ typedef unsigned long long ull;
 const int mod = 1e9 + 7;
 typedef pair<int, int> pii;
 
+int t;
+int n, m;
 int main()
 {
-    string s;
-    cin >> s;
-    int a, b;
-    cin >> a >> b;
-    cout << s.substr(a, b) << endl;
+    cin >> t;
+
+    while (t--) {
+        cin >> n >> m;
+    }
 }

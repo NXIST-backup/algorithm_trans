@@ -1,6 +1,6 @@
 /*
   Problem Name:数字游戏 II
-  algorithm tag:数形DP
+  algorithm tag:数位DP
 */
 
 #include <algorithm>

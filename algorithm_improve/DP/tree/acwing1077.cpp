@@ -1,6 +1,6 @@
 /*
   Problem Name:皇宫看守
-  algorithm tag:
+  algorithm tag:树形DP
 */
 
 #include <algorithm>
@@ -18,6 +18,7 @@ using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 const int mod = 1e9 + 7;
+const int INF = 1e9;
 typedef pair<int, int> pii;
 
 const int N = 1505;
@@ -26,31 +27,32 @@ int n;
 vector<int> g[N];
 int w[N];
 bool st[N];
-int dp[N][2];
+int dp[N][3];
 
 void dfs(int u)
 {
-    dp[u][1] = mod, dp[u][0] = mod;
-    int sum = 0;
-    int cut = mod;
-    bool flag = false;
+    int cut = INF;
+    bool flag = 0;
     for (auto v : g[u]) {
         dfs(v);
-        sum += min(dp[v][1], dp[v][0]);
-        cut = min(cut, abs(dp[v][1] - dp[v][0]));
-        if (dp[v][1] <= dp[v][0])
-            flag = true;
+        dp[u][0] += min(dp[v][2], dp[v][1]);
+        dp[u][2] += min({dp[v][1], dp[v][2], dp[v][0]});
+        cut = min(cut, abs(dp[v][2] - dp[v][1]));
+        if (dp[v][2] <= dp[v][1]) {
+            flag = 1;
+        }
     }
-    if (cut == mod) {
-        dp[u][1] = w[u];
+    if (cut == INF) {
         dp[u][0] = 0;
+        dp[u][1] = INF;
+        dp[u][2] = w[u];
         return;
     }
-    dp[u][1] = sum;
+    dp[u][2] += w[u];
     if (flag)
-        dp[u][0] = sum;
+        dp[u][1] = dp[u][0];
     else
-        dp[u][0] = sum + cut;
+        dp[u][1] = dp[u][0] + cut;
 }
 
 int main()
@@ -72,6 +74,8 @@ int main()
     while (st[root])
         root++;
     dfs(root);
-
-    cout << min(dp[root][1], dp[root][0]) << endl;
+    if (n == 1)
+        cout << w[root] << endl;
+    else
+        cout << min(dp[root][1], dp[root][2]) << endl;
 }

@@ -30,10 +30,8 @@ int s[N];
 int main()
 {
     cin >> t;
-    int ire = 0;
     while (t--) {
         cin >> n;
-        ire++;
         for (int i = 1; i <= n; i++)
             cin >> a[i];
         int last = 0;

@@ -1,6 +1,6 @@
 /*
-  Problem Name:旅行问题
-  algorithm tag:单调队列DP
+  Problem Name:Logical Expression
+  algorithm tag:
 */
 
 #include <algorithm>
@@ -20,25 +20,26 @@ typedef unsigned long long ull;
 const int INF = 1e9;
 typedef pair<int, int> pii;
 
-const int N = 2e6 + 5;
-
+const int N = 65;
 int n;
-ll s[N];
-int o[N], d[N];
-int q[N];
-bool s[N];
 
 int main()
 {
     cin >> n;
-
+    string s[N];
+    for (int i = 1; i <= n; i++)
+        cin >> s[i];
+    ll zero = 1, one = 1;
     for (int i = 1; i <= n; i++) {
-        cin >> o[i] >> d[i];
+        if (s[i] == "OR") {
+            one <<= 1;
+            one += zero;
+
+        } else {
+            zero <<= 1;
+            zero += one;
+        }
     }
 
-    for (int i = 1; i <= n; i++) {
-        s[i] = s[i + n] = o[i] - d[i];
-    }
-    for (int i = 1; i <= n * 2; i++)
-        s[i] += s[i + 1];
+    cout << one << endl;
 }

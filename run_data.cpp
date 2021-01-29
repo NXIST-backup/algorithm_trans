@@ -39,11 +39,10 @@ int main()
     freopen("1.in", "w", stdout);
     srand((unsigned)time(0));
 
-    int n = 2e5;
+    int n = 1e4;
     cout << n << endl;
     for (int i = 1; i <= n; i++) {
-        int t = 1e9;
-        cout << t << " " << t << endl;
+        cout << i << " ";
     }
     fclose(stdin);
     fclose(stdout);

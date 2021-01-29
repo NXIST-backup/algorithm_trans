@@ -1,8 +1,7 @@
 /*
-  Problem Name:修剪草坪  
-  algorithm tag:
+  Problem Name:烽火传递
+  algorithm tag:queue
 */
-
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -15,53 +14,44 @@
 
 using namespace std;
 
-#define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
-
 typedef long long ll;
 typedef unsigned long long ull;
 const int INF = 1e9;
 const int mod = 1e9 + 7;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
+#define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 1e5 + 50;
-
-ll s[N];
-ll f[N];
-ll q[N];
-int n, k;
-
-ll g(int i)
-{
-    if (!i)
-        return 0;
-    else
-        return f[i - 1] - s[i];
-}
+const int N = 2e5 + 50;
+int n, m;
+int f[N], q[N], a[N];
 
 int main()
 {
     iosf;
 
-    cin >> n >> k;
+    cin >> n >> m;
 
     for (int i = 1; i <= n; i++) {
         int x;
         cin >> x;
-        s[i] = s[i - 1] + x;
+        a[i] = x;
     }
 
     int hh = 0, tt = 0;
 
     for (int i = 1; i <= n; i++) {
-        while (q[hh] < i - k)
+        while (q[hh] < i - m)
             hh++;
-        f[i] = max(f[i - 1], g(q[hh]) + s[i]);
-
-        while (g(q[tt]) <= g(i) && tt >= hh)
+        f[i] = f[q[hh]] + a[i];
+        while (tt >= hh && f[q[tt]] >= f[i])
             tt--;
         q[++tt] = i;
     }
+    int res = INF;
 
-    cout << f[n] << endl;
+    for (int i = n - m + 1; i <= n; i++)
+        res = min(res, f[i]);
+
+    cout << res << endl;
 }

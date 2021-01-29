@@ -22,23 +22,3 @@ typedef pair<int, int> pii;
 
 const int N = 2e6 + 5;
 
-int n;
-ll s[N];
-int o[N], d[N];
-int q[N];
-bool s[N];
-
-int main()
-{
-    cin >> n;
-
-    for (int i = 1; i <= n; i++) {
-        cin >> o[i] >> d[i];
-    }
-
-    for (int i = 1; i <= n; i++) {
-        s[i] = s[i + n] = o[i] - d[i];
-    }
-    for (int i = 1; i <= n * 2; i++)
-        s[i] += s[i + 1];
-}

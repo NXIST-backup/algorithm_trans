@@ -56,3 +56,8 @@ int main()
             cout << 0 << endl;
     }
 }
+
+int cmp(int a, int b)
+{
+    cout << 1 << endl;
+}

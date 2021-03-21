@@ -1,6 +1,6 @@
 /*
   Problem Name:迷宫问题
-  algorithm tag:Flood fill
+  algorithm tag:最短路
 */
 
 #include <algorithm>
@@ -28,8 +28,7 @@ int n;
 bool g[N][N];
 int dx[4]={0,1,0,-1};
 int dy[4]={1,0,-1,0};
-map<pii,pii> rem;
-
+pii mem[N][N];
 int main()
 {
     iosf;
@@ -58,22 +57,24 @@ int main()
             if(g[x][y]){
                 q.push({x,y});
                 g[x][y]=0;
-                rem[{x,y}]={t.first,t.second};
+                mem[x][y]={t.first,t.second};
             }
         }
     }
-    int x=rem[{n,n}].first;
-    int y=rem[{n,n}].second;
+    int x=mem[n][n].first;
+    int y=mem[n][n].second;
     ans.push_back({n,n});
     while(x!=1||y!=1){
         ans.push_back({x,y});
         int x1=x,y1=y;
-        x=rem[{x1,y1}].first;
-        y=rem[{x1,y1}].second;
+        x=mem[x1][y1].first;
+        y=mem[x1][y1].second;
     }
     ans.push_back({1,1});
 
     for(int i=ans.size()-1;i>=0;i--){
         cout<<ans[i].first-1<<" "<<ans[i].second-1<<endl;
     }
+
+    return 0;
 }   

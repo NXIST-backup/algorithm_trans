@@ -59,7 +59,6 @@ int dij()
             }
         }
     }
-
     return dist[n][m];
 }
 

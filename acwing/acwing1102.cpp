@@ -31,28 +31,26 @@ int q[N];
 
 void bfs(int u)
 {
-    q[0] = n;
     st[u] = 1;
+    q[0] = n;
     int hh = 0, tt = 0;
+
     while (hh <= tt) {
         int t = q[hh++];
-
         if (t == k)
-            break;
-        if (t >= N)
-            continue;
+            return;
 
-        if (!st[t * 2]) {
-            q[++tt] = t * 2;
-            st[t * 2] += st[t] + 1;
-        }
-        if (!st[t + 1]) {
-            q[++tt] = t + 1;
-            st[t + 1] += st[t] + 1;
-        }
         if (!st[t - 1] && t - 1 >= 0) {
-            q[++tt] = t - 1;
             st[t - 1] += st[t] + 1;
+            q[++tt] = t - 1;
+        }
+        if (!st[t + 1] && t + 1 < N) {
+            st[t + 1] += st[t] + 1;
+            q[++tt] = t + 1;
+        }
+        if (!st[t * 2] && t * 2 < N) {
+            st[t * 2] += st[t] + 1;
+            q[++tt] = t * 2;
         }
     }
 }

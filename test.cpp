@@ -1,6 +1,6 @@
 /*
-  Problem Name:抓住那头牛
-  algorithm tag:BFS
+  Problem Name:
+  algorithm tag:
 */
 
 #include <algorithm>
@@ -21,50 +21,14 @@ const int INF = 1e9;
 const int mod = 1e9 + 7;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
+//#define x first
+//#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 1e5 + 5;
-
-int n, k;
-int st[N];
-int q[N];
-
-void bfs(int u)
-{
-    q[0] = n;
-    st[u] = 1;
-    int hh = 0, tt = 0;
-    while (hh <= tt) {
-        int t = q[hh++];
-
-        if (t == k)
-            break;
-        if (t >= N)
-            continue;
-
-        if (!st[t * 2]) {
-            q[++tt] = t * 2;
-            st[t * 2] += st[t] + 1;
-        }
-        if (!st[t + 1]) {
-            q[++tt] = t + 1;
-            st[t + 1] += st[t] + 1;
-        }
-        if (!st[t - 1] && t - 1 >= 0) {
-            q[++tt] = t - 1;
-            st[t - 1] += st[t] + 1;
-        }
-    }
-}
-
+char g[105][105];
 int main()
 {
-    iosf;
-    cin >> n >> k;
+    scanf("%s", g[0]);
 
-    if (n < k) {
-        bfs(n);
-        cout << st[k] - 1 << endl;
-    } else
-        cout << n - k << endl;
+    cout << g[0] << endl;
 }

@@ -25,10 +25,12 @@ typedef pair<ll, ll> pll;
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-char g[105][105];
 int main()
 {
-    scanf("%s", g[0]);
+    string s;
+    cin >> s;
+    a
+        string sub = s.substr(3, 1);
 
-    cout << g[0] << endl;
+    cout << sub << endl;
 }

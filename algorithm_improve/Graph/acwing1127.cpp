@@ -1,6 +1,6 @@
 /*
-  Problem Name:信使
-  algorithm tag:dijkstra
+  Problem Name:香甜的黄油
+  algorithm tag:spfa
 */
 
 #include <algorithm>
@@ -25,19 +25,22 @@ typedef pair<ll, ll> pll;
 #define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 105, M = 205;
+const int P = 505, N = 805, M = 1500;
 
-int n, m;
+int park[N];
+int p, n, m;
 vector<pii> g[N];
 int dist[N];
 bool state[N];
 
-void dij()
+int dij(int st)
 {
     memset(dist, 0x3f, sizeof dist);
+    memset(state, 0, sizeof state);
     priority_queue<pii, vector<pii>, greater<pii>> heap;
-    heap.push({0, 1});
-    dist[1] = 0;
+    heap.push({0, st});
+    dist[st] = 0;
+
     while (heap.size()) {
         auto t = heap.top();
         heap.pop();
@@ -53,12 +56,30 @@ void dij()
             }
         }
     }
+    int res = 0;
+    for (int i = 1; i <= n; i++) {
+        if (!park[i])
+            continue;
+        if (dist[i] == 0x3f3f3f3f)
+            return -1;
+        else
+            res += dist[i] * park[i];
+    }
+
+    return res;
 }
 
 int main()
 {
     iosf;
-    cin >> n >> m;
+
+    cin >> p >> n >> m;
+
+    for (int i = 1; i <= p; i++) {
+        int x;
+        cin >> x;
+        park[x]++;
+    }
 
     for (int i = 1; i <= m; i++) {
         int a, b, c;
@@ -67,19 +88,15 @@ int main()
         g[a].push_back({c, b});
         g[b].push_back({c, a});
     }
-    dij();
-    bool is_valid = true;
-    int ans = 0;
+    int ans = 0x3f3f3f3f;
     for (int i = 1; i <= n; i++) {
-        if (dist[i] == 0x3f3f3f3f) {
-            is_valid = false;
-            break;
-        } else
-            ans = max(ans, dist[i]);
-    }
+        int res = dij(i);
 
-    if (is_valid)
-        cout << ans << endl;
-    else
+        if (res != -1)
+            ans = min(ans, res);
+    }
+    if (ans == 0x3f3f3f3f)
         cout << -1 << endl;
+    else
+        cout << ans << endl;
 }

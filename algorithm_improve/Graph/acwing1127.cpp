@@ -1,6 +1,6 @@
 /*
   Problem Name:香甜的黄油
-  algorithm tag:spfa
+  algorithm tag:dijkstra
 */
 
 #include <algorithm>

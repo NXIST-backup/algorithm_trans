@@ -59,7 +59,7 @@ void spfa()
   st[1]=1;
   q[0]=1;
   while(hh>=tt){
-    int t = q[++hh];
+    int t = q[hh++];
 
     st[t]=0;
 

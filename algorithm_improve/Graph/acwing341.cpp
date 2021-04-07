@@ -1,6 +1,6 @@
 /*
   Problem Name:最优贸易
-  algorithm tag:DP
+  algorithm tag:DP,spfa,dijkstra,分层图
 */
 
 #include <algorithm>
@@ -21,19 +21,18 @@ const int INF = 1e9;
 const int mod = 1e9 + 7;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
-//#define x first
-//#define y second
+#define x first
+#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
-//三种做法
-//spfa分层图
-//dfs 记忆化搜索
-//spfa
+//dijkstra做法
 
 const int N = 1e5 + 5, M = 1e6 + 5;
 int h[N], hb[N], e[M], ne[M], idx;
 int val[N];
 int n, m;
 bool is_valid[N];
+int dist[N];
+bool st[N];
 
 void add(int h[], int a, int b)
 {
@@ -51,15 +50,44 @@ void dfs(int u)
             dfs(j);
     }
 }
+void dij()
+{
+    memset(dist, 0x3f, sizeof dist);
+    priority_queue<pii, vector<pii>, greater<pii>> heap;
+    for (int i = 1; i <= n; i++) {
+        dist[i] = val[i];
+        heap.push({dist[i], i});
+    }
 
+    while (heap.size()) {
+        int u = heap.top().y;
+        heap.pop();
+
+        if (st[u])
+            continue;
+        st[u] = 1;
+
+        for (int i = h[u]; ~i; i = ne[i]) {
+            int v = e[i];
+
+            if (dist[v] > dist[u]) {
+                dist[v] = dist[u];
+                heap.push({dist[v], v});
+            }
+        }
+    }
+}
 int main()
 {
     iosf;
     cin >> n >> m;
-
-    for (int i = 1; i <= n; i++)
-        cin >> val[i];
-
+    memset(h, -1, sizeof h);
+    memset(hb, -1, sizeof hb);
+    for (int i = 1; i <= n; i++) {
+        int x;
+        cin >> x;
+        val[i] = x + 1000;
+    }
     for (int i = 1; i <= m; i++) {
         int a, b, c;
         cin >> a >> b >> c;
@@ -71,4 +99,12 @@ int main()
 
     dfs(n);
 
+    dij();
+    int ans = -0x3f3f3f3f;
+    for (int i = 1; i <= n; i++) {
+        if (is_valid[i])
+            ans = max(ans, val[i] - dist[i]);
+    }
+
+    cout << ans << endl;
 }

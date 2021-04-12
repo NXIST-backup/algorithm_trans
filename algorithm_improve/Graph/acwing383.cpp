@@ -1,6 +1,6 @@
 /*
   Problem Name:观光
-  algorithm tag:DP,最短路
+  algorithm tag:DP,最短路，次短路
 */
 
 #include <algorithm>

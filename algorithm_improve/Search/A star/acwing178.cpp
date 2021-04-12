@@ -1,6 +1,6 @@
 /*
   Problem Name:第K短路
-  algorithm tag:A star
+  algorithm tag:A star，K短路
 */
 
 #include <algorithm>

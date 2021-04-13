@@ -10,9 +10,9 @@
 #include <iostream>
 #include <map>
 #include <queue>
+#include <stack>
 #include <unordered_map>
 #include <vector>
-
 using namespace std;
 
 typedef long long ll;
@@ -49,12 +49,12 @@ bool spfa(double mid)
     memset(st, 0, sizeof st);
     memset(cnt, 0, sizeof cnt);
     int count = 0;
-    queue<int> q;
+    stack<int> q;
     for (int i = 1; i <= iter; i++)
         q.push(i), st[i] = true;
 
     while (q.size()) {
-        int u = q.front();
+        int u = q.top();
         q.pop();
 
         st[u] = false;
@@ -63,8 +63,6 @@ bool spfa(double mid)
             int v = e[i];
             if (dist[v] < dist[u] + w[i] - mid) {
                 dist[v] = dist[u] + w[i] - mid;
-                if (++count > 10000) //trick
-                    return true;
                 cnt[v] = cnt[u] + 1;
                 if (cnt[v] >= iter) //记住是大于点数
                     return true;

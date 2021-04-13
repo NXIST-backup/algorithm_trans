@@ -86,7 +86,7 @@ int main()
         add(a, b, c);
     }
 
-    double l = 0, r = 1e6;
+    double l = 0, r = 1e5;
     while (r - l > eps) {
         double mid = (l + r) / 2;
         memcpy(cy, w, sizeof cy);

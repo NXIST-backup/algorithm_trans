@@ -66,7 +66,7 @@ bool spfa(double mid)
                 if (++count > 10000) //trick
                     return true;
                 cnt[v] = cnt[u] + 1;
-                if (cnt[v] >= N) //记住是大于最大值
+                if (cnt[v] >= iter) //记住是大于点数
                     return true;
                 if (!st[v]) {
                     q.push(v);

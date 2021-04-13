@@ -61,8 +61,8 @@ bool spfa()
             int v = e[i];
             if (dist[v] < dist[u] + w[i]) {
                 dist[v] = dist[u] + w[i];
-                cnt[i]++;
-                if (cnt[i] >= n)
+                cnt[v] = cnt[u] + 1;
+                if (cnt[v] >= N)
                     return true;
                 if (!st[v]) {
                     q.push(v);

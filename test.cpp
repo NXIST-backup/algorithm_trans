@@ -1,63 +1,83 @@
+/*
+  Problem Name:
+  algorithm tag:
+*/
+
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <map>
+#include <queue>
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
-typedef long long LL;
+typedef long long ll;
+typedef unsigned long long ull;
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9 + 7;
+const double eps = 1e-4;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+//#define x first
+//#define y second
+#define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 200010;
-
+const int N = 2e5 + 5;
 int n;
-int a[N];
-int tr[N];
-int Greater[N], lower[N];
-
-int lowbit(int x)
+struct Node
 {
-    return x & -x;
-}
+    int l, r;
+    int num;
+} tr[N * 4];
 
-void add(int x, int c)
+void pushup(int u)
 {
-    for (int i = x; i <= n; i += lowbit(i))
-        tr[i] += c;
+    tr[u].num = tr[u << 1].num + tr[u << 1 | 1].num;
 }
-
-int sum(int x)
+void build(int u, int l, int r)
 {
-    int res = 0;
-    for (int i = x; i; i -= lowbit(i))
-        res += tr[i];
-    return res;
+    tr[u] = {l, r};
+    if (l == r)
+        return;
+    int mid = tr[u].l + tr[u].r >> 1;
+    build(u << 1, l, mid), build(u << 1 | 1, mid + 1, r);
+    pushup(u);
 }
-
+void modify(int u, int x, int v)
+{
+    if (tr[u].l == x && tr[u].r == x)
+        tr[u].num += v;
+    else {
+        int mid = tr[u].l + tr[u].r >> 1;
+        if (x <= mid)
+            modify(u << 1, x, v);
+        else
+            modify(u << 1 | 1, x, v);
+    }
+}
+int query(int u, int l, int r)
+{
+    if (tr[u].l >= l && tr[u].r <= r)
+        return tr[u].num;
+    int mid = tr[u].l + tr[u].r >> 1;
+    int v = 0;
+    if (l <= mid)
+        v = query(u << 1, l, r);
+    if (r > mid)
+        v += query(u << 1, l, r);
+    return v;
+}
 int main()
 {
-    scanf("%d", &n);
-
+    iosf;
+    cin >> n;
+    build(1, 1, N);
     for (int i = 1; i <= n; i++)
-        scanf("%d", &a[i]);
+        modify(1, 0, 1);
 
-    for (int i = 1; i <= n; i++) {
-        int y = a[i];
-        Greater[i] = sum(n) - sum(y);
-        lower[i] = sum(y - 1);
-        cout << lower[i] << endl;
-        add(y, 1);
-    }
-
-    memset(tr, 0, sizeof tr);
-    LL res1 = 0, res2 = 0;
-    for (int i = n; i; i--) {
-        int y = a[i];
-        res1 += Greater[i] * (LL)(sum(n) - sum(y));
-        res2 += lower[i] * (LL)(sum(y - 1));
-        add(y, 1);
-    }
-
-    printf("%lld %lld\n", res1, res2);
-
-    return 0;
+    cout << query(1, 2, 10) << endl;
 }

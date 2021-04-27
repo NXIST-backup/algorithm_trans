@@ -1,6 +1,6 @@
 /*
   Problem Name:奇偶游戏
-  algorithm tag:带权并查集
+  algorithm tag:带权并查集，扩展域并查集
 */
 
 #include <algorithm>
@@ -26,48 +26,68 @@ typedef pair<ll, ll> pll;
 //#define x first
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
+#include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <unordered_map>
 
-const int N = 2e4 + 5;
+using namespace std;
+
+const int N = 20010;
+
 int n, m;
-int p[N], d[N], Size[N];
-map<int, int> mp;
-set<int> st;
+int p[N], d[N];
+unordered_map<int, int> S;
+
+int get(int x)
+{
+    if (S.count(x) == 0)
+        S[x] = ++n;
+    return S[x];
+}
+
 int find(int x)
 {
     if (p[x] != x) {
-        int t = find(p[x]);
+        int root = find(p[x]);
         d[x] += d[p[x]];
-        p[x] = t;
+        p[x] = root;
     }
-
     return p[x];
 }
-struct Condition
-{
-    int a, b, type;
-} condi[N];
+
 int main()
 {
-    iosf;
     cin >> n >> m;
+    n = 0;
 
-    for (int i = 1; i <= N - 1; i++)
-        p[i] = i, Size[i] = 1;
-    int idx = 0;
+    for (int i = 0; i < N; i++)
+        p[i] = i;
+
+    int res = m;
     for (int i = 1; i <= m; i++) {
-        int a, b, c;
-        char op[4];
-        cin >> a >> b;
-        scanf("%s", op);
-        if (op[0] == 'e')
-            c = 1;
-        else
-            c = 0;
-        condi[i] = {a, b, c};
-        st.insert(a);
-        st.insert(b);
+        int a, b;
+        string type;
+        cin >> a >> b >> type;
+        a = get(a - 1), b = get(b);
+
+        int t = 0;
+        if (type == "odd")
+            t = 1;
+
+        int pa = find(a), pb = find(b);
+        if (pa == pb) {
+            if (((d[a] + d[b]) % 2 + 2) % 2 != t) {
+                res = i - 1;
+                break;
+            }
+        } else {
+            p[pa] = pb;
+            d[pa] = d[a] ^ d[b] ^ t;
+        }
     }
 
-    for (auto item : st)
-        mp[item] = ++idx;
+    cout << res << endl;
+
+    return 0;
 }

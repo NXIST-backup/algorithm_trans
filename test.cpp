@@ -1,83 +1,58 @@
-/*
-  Problem Name:
-  algorithm tag:
-*/
-
 #include <algorithm>
-#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
-#include <map>
-#include <queue>
-#include <unordered_map>
-#include <vector>
 
 using namespace std;
 
-typedef long long ll;
-typedef unsigned long long ull;
-const int INF = 0x3f3f3f3f;
-const int mod = 1e9 + 7;
-const double eps = 1e-4;
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
-//#define x first
-//#define y second
-#define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
+typedef long long LL;
 
-const int N = 2e5 + 5;
-int n;
-struct Node
-{
-    int l, r;
-    int num;
-} tr[N * 4];
+const int N = 3;
 
-void pushup(int u)
+int n, m;
+
+void mul(int c[], int a[], int b[][N])
 {
-    tr[u].num = tr[u << 1].num + tr[u << 1 | 1].num;
+    int temp[N] = {0};
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            temp[i] = (temp[i] + (LL)a[j] * b[j][i]) % m;
+
+    memcpy(c, temp, sizeof temp);
 }
-void build(int u, int l, int r)
+
+void mul(int c[][N], int a[][N], int b[][N])
 {
-    tr[u] = {l, r};
-    if (l == r)
-        return;
-    int mid = tr[u].l + tr[u].r >> 1;
-    build(u << 1, l, mid), build(u << 1 | 1, mid + 1, r);
-    pushup(u);
+    int temp[N][N] = {0};
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            for (int k = 0; k < N; k++)
+                temp[i][j] = (temp[i][j] + (LL)a[i][k] * b[k][j]) % m;
+
+    memcpy(c, temp, sizeof temp);
 }
-void modify(int u, int x, int v)
-{
-    if (tr[u].l == x && tr[u].r == x)
-        tr[u].num += v;
-    else {
-        int mid = tr[u].l + tr[u].r >> 1;
-        if (x <= mid)
-            modify(u << 1, x, v);
-        else
-            modify(u << 1 | 1, x, v);
-    }
-}
-int query(int u, int l, int r)
-{
-    if (tr[u].l >= l && tr[u].r <= r)
-        return tr[u].num;
-    int mid = tr[u].l + tr[u].r >> 1;
-    int v = 0;
-    if (l <= mid)
-        v = query(u << 1, l, r);
-    if (r > mid)
-        v += query(u << 1, l, r);
-    return v;
-}
+
 int main()
 {
-    iosf;
-    cin >> n;
-    build(1, 1, N);
-    for (int i = 1; i <= n; i++)
-        modify(1, 0, 1);
+    cin >> n >> m;
 
-    cout << query(1, 2, 10) << endl;
+    int f1[N] = {1, 1, 1};
+    int a[N][N] = {
+        {0, 1, 0},
+        {1, 1, 1},
+        {0, 0, 1}};
+    int e[N][N];
+    for (int i = 0; i < 3; i++)
+        e[i][i] = 1;
+    n--;
+    while (n) {
+        if (n & 1)
+            mul(f1, f1, a); // res = res * a
+        mul(a, a, a);       // a = a * a
+        n >>= 1;
+    }
+
+    cout << f1[2] << endl;
+
+    return 0;
 }

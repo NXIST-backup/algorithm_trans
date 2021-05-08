@@ -45,11 +45,11 @@ void dfs(int u, int last)
         for (auto item : lis)
             res = max(item, res);
         ans = min(ans, res);
-        cout << ans << endl;
         return;
     }
     int res = 0;
     for (int i = 0; i < 1 << n; i++) {
+        res=0;
         if ((i & last) > 0)
             continue;
         int j = i, iter = 0;

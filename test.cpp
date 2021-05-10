@@ -27,7 +27,6 @@ typedef pair<ll, ll> pll;
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
 int jobs[15];
-bool st[15];
 int n, k;
 vector<int> lis;
 int ans;
@@ -49,7 +48,7 @@ void dfs(int u, int last)
     }
     int res = 0;
     for (int i = 0; i < 1 << n; i++) {
-        res=0;
+        res = 0;
         if ((i & last) > 0)
             continue;
         int j = i, iter = 0;

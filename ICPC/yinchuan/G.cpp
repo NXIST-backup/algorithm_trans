@@ -26,12 +26,12 @@ typedef pair<ll, ll> pll;
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 1e5 + 5;
+const int N = 10 + 5;
 
 int n, q, idx;
 int h[N];
-int id[N], order[N];
-int ans;
+int order[N];
+ll ans;
 struct Node
 {
     int h, l, r;
@@ -44,8 +44,8 @@ int sqr(int x)
 
 void del(int idd)
 {
-    Node &a = lis[idd];
-    Node ln = lis[a.l], rn = lis[a.r];
+    Node &a = lis2[idd];
+    Node &ln = lis2[a.l], &rn = lis2[a.r];
     if (a.l != 0)
         ans -= sqr(ln.h - a.h);
     if (a.r != n + 1)
@@ -62,39 +62,45 @@ int main()
     cin >> n >> q;
     for (int i = 1; i <= n; i++) {
         cin >> h[i];
-        if (i > 1)
-            ans += (h[i] - h[i - 1]) * (h[i] - h[i - 1]);
     }
     for (int i = 1; i <= n; i++) {
         int x;
         cin >> x;
         order[i] = x;
-        id[x] = i;
     }
     for (int i = 1; i <= n; i++) {
-        int height = h[id[i]];
+        int height = h[i];
         lis[i] = {height, i - 1, i + 1};
     }
+    int last = 0;
+    q += 1;
+    int __ = 0;
 
+    for (int i = 1; i <= n - 1; i++) {
+        ans += sqr(lis[i + 1].h - lis[i].h);
+    }
+    ll res = 0, tmp = ans;
     while (q--) {
-        int k;
-        cin >> k;
-        k = (k + ans) % n;
+        int k = 0;
+        if (__++ > 0) {
+            cin >> k;
+            k = ((k + res) % n + last) % n;
+        }
         // k+1~n~1~k
-        int res = ans;
-        int tmp = ans;
+        res = ans;
         memcpy(lis2, lis, sizeof lis2);
         for (int i = k; i >= 1; i--) {
             int idd = order[i];
             del(idd);
             res += ans;
         }
-        for (int i = n; i >= k + 1; i--) {
+        for (int i = n; i >= k + 2; i--) {
             int idd = order[i];
             del(idd);
             res += ans;
         }
-
+        ans = tmp;
+        last = k;
         cout << res << endl;
     }
 }

@@ -26,12 +26,7 @@ typedef pair<ll, ll> pll;
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-int Nd10F(int n)
-{
-    double phi = (1.0 + sqrt(5)) / 2.0;
-    return (int)floor(n * log10(phi) - 0.5 * log10(5.0)) + 1;
-}
 int main()
 {
-    cout << Nd10F(1e9) << endl;
+    vector<vector<int>> q;
 }

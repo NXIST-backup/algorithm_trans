@@ -26,7 +26,7 @@ typedef pair<ll, ll> pll;
 #define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 115, M = 65, VV = N * M, EE = VV * VV;
+const int N = 105, M = 55, VV = 5150, EE = VV * VV;
 
 int n, m, k1, k2, R, V;
 int start, ed;
@@ -75,15 +75,41 @@ int pos(int x, int y)
     return x * (m + 1) + y;
 }
 
-void build(int x, int y)
+void build(int x, int y, int u, int path)
 {
-    for (int i = 0; i <= V; i++) {
-        for (int j = 0; j <= V - i; j++) {
+    if (path >= V)
+        return;
+    for (int i = 0; i < 4; i++) {
+        int x1 = x + dx[i], y1 = y + dy[i];
+        if (x1 < 0 || y1 < 0 || x1 > n || y1 > m || state[x1][y1])
+            continue;
+        if (!st[x1][y1]) {
+            add(u, pos(x1, y1));
+            //cout << u << " " << pos(x1, y1) << endl;
         }
+        state[x1][y1] = 1;
+        build(x1, y1, u, path + 1);
     }
 }
 void bfs()
 {
+    queue<int> q;
+    q.push(pos(0, start));
+    dist[pos(0, start)] = 1;
+
+    while (q.size()) {
+        int u = q.front();
+        q.pop();
+
+        for (int i = h[u]; ~i; i = ne[i]) {
+            int v = e[i];
+            if (!dist[v]) {
+                q.push(v);
+                dist[v] = 1;
+                //cout << v << endl;
+            }
+        }
+    }
 }
 
 int main()
@@ -91,6 +117,7 @@ int main()
     iosf;
     cin >> n >> m >> k1 >> k2 >> R >> V >> start >> ed;
     V = min(5000, V);
+    memset(h, -1, sizeof h);
     for (int i = 1; i <= k1; i++) {
         int x, y;
         cin >> x >> y;
@@ -101,6 +128,25 @@ int main()
         cin >> type >> x;
         del_linear(type, x);
     }
+
     //out();
+
+    // for (int i = 0; i <= n; i++) {
+    //     for (int j = 0; j <= m; j++)
+    //         cout << pos(i, j) << " ";
+    //     cout << endl;
+    // }
+
+    for (int i = 0; i <= n; i++)
+        for (int j = 0; j <= m; j++)
+            if (!st[i][j]) {
+                memset(state, 0, sizeof state);
+                build(i, j, pos(i, j), 0);
+            }
     bfs();
+    cout << pos(n, ed) << endl;
+    if (dist[pos(n, ed)])
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }

@@ -25,15 +25,12 @@ typedef pair<ll, ll> pll;
 //#define x first
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
-const int N = 1e4 + 5;
-int a[N][N];
 
 int main()
 {
-    for (int i = 1; i <= 1e4; i++) {
-        for (int j = 1; j <= 1e4; j++)
-            a[i][j] = i * j;
-    }
-    int n;
-    cin >> n;
+    auto add = [](int a, int b) {
+        return a + b;
+    };
+
+    cout << add(1, 2) << endl;
 }

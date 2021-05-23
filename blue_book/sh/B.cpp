@@ -25,3 +25,60 @@ typedef pair<ll, ll> pll;
 //#define x first
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
+const int N = 1e5 + 5;
+
+int n, m, k;
+int f[N];
+int a[15], b[15], c[15];
+int d[N];
+
+int bs(int x)
+{
+    int l = 1, r = 1e5;
+    while (l < r) {
+        int mid = l + r >> 1;
+        if (d[mid] >= x)
+            r = mid;
+        else
+            l = mid + 1;
+    }
+    return l;
+}
+
+int main()
+{
+    iosf;
+    cin >> n >> m >> k;
+
+    for (int i = 1; i <= n; i++)
+        cin >> a[i] >> b[i] >> c[i];
+    int sum = 0;
+    for (int i = 1; i <= m; i++) {
+        int x, y;
+        cin >> x >> y;
+        d[x] = y;
+        sum += y;
+    }
+    for (int i = 1; i <= 1e5; i++)
+        d[i] += d[i - 1];
+    f[0] = 0;
+    for (int i = 1; i <= sum; i++) {
+        int day = bs(i);
+        f[i] = f[i - 1] + k;
+        for (int j = 1; j <= n; j++) {
+            int r = d[day];
+            int l = d[day - a[j]];
+            while (l < r) {
+                int mid = l + r >> 1;
+                if (mid >= i - b[j])
+                    r = mid;
+                else
+                    l = mid + 1;
+            }
+            if (l >= i - b[j])
+                f[i] = min(f[i], f[l] + c[j]);
+        }
+    }
+
+    cout << f[sum] << endl;
+}

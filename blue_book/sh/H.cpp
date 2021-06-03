@@ -1,81 +1,140 @@
+/*
+  Problem Name:
+  algorithm tag:
+*/
+
 #include <algorithm>
+#include <cmath>
+#include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <map>
 #include <queue>
-#define mp make_pair
+#include <unordered_map>
+#include <vector>
+
 using namespace std;
-const int N = 510;
-typedef pair<int, int> PII;
 
-int n, m, t, x1, y1, x2, y2, ti;
-char a[N][N];
-int main(void)
+typedef long long ll;
+typedef unsigned long long ull;
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9 + 7;
+const double eps = 1e-4;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+#define x first
+#define y second
+#define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
+
+const int N = 505, M = N * N + N;
+
+int n, m, q;
+int fa1[M], fa2[M], fa3[M];
+char g[N][N];
+int st[M];
+
+int find(int x, int fa[])
 {
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= m; j++)
-            cin >> a[i][j];
+    if (x != fa[x])
+        fa[x] = find(fa[x], fa);
+    return fa[x];
+}
 
-    cin >> ti;
-    while (ti--) {
-        cin >> t >> x1 >> y1 >> x2 >> y2;
+int pos(int x, int y)
+{
+    return x * m + y;
+}
+
+void bfs(int x, int y, int t)
+{
+    queue<pii> q;
+    q.push({x, y});
+
+    while (q.size()) {
+        auto u = q.front();
+        q.pop();
+
+        st[pos(u.x, u.y)] = 1;
+
         if (t == 1) {
-            if (y1 != y2)
-                puts("N");
-            else {
-                bool flag = true;
-                for (int i = x1; i <= x2; i++)
-                    if (a[i][y1] == '1')
-                        flag = false;
-                if (flag && x1 <= x2)
-                    puts("Y");
-                else
-                    puts("N");
-            }
+            int a = u.x + 1, b = u.y;
+            if (a >= n || b >= m || a < 0 || b < 0 || st[pos(a, b)] || g[a][b] == '1')
+                continue;
+            q.push({a, b});
+            int pa = find(pos(u.x, u.y), fa1), pb = find(pos(a, b), fa1);
+            if (pa != pb)
+                fa1[pb] = pa;
         } else if (t == 2) {
-            if (x1 != x2)
-                puts("N");
-            else {
-                bool flag = true;
-                for (int i = y1; i <= y2; i++)
-                    if (a[x1][i] == '1')
-                        flag = false;
-                if (flag && y1 <= y2)
-                    puts("Y");
-                else
-                    puts("N");
-            }
+            int a = u.x, b = u.y + 1;
+            if (a >= n || b >= m || a < 0 || b < 0 || st[pos(a, b)] || g[a][b] == '1')
+                continue;
+            q.push({a, b});
+            int pa = find(pos(u.x, u.y), fa2), pb = find(pos(a, b), fa2);
+            if (pa != pb)
+                fa2[pb] = pa;
         } else {
-            queue<PII> que;
-            int dx[] = {1, 0}, dy[] = {0, 1};
-            que.push(mp(x1, y1));
-            bool ffm[N][N], flag = false;
-            memset(ffm, false, sizeof(ffm));
-            while (!que.empty()) {
-                PII t = que.front();
-                que.pop();
-                int tx = t.first, ty = t.second;
-                for (int i = 0; i < 2; i++) {
-                    int px = tx + dx[i], py = ty + dy[i];
-                    if (ffm[px][py] == true)
-                        continue;
-                    if (a[px][py] == '1')
-                        continue;
-                    if (px < x1 || px > x2 || py < y1 || py > y2)
-                        continue;
-                    if (px == x2 && py == y2) {
-                        flag = true;
-                        break;
-                    }
-                    que.push(mp(px, py));
-                }
-                if (flag == true)
-                    break;
-            }
-            if (flag)
-                puts("Y");
-            else
-                puts("N");
+            int a = u.x + 1, b = u.y;
+            if (a >= n || b >= m || a < 0 || b < 0 || st[pos(a, b)] || g[a][b] == '1')
+                continue;
+            q.push({a, b});
+            int pa = find(pos(u.x, u.y), fa3), pb = find(pos(a, b), fa3);
+            if (pa != pb)
+                fa3[pb] = pa;
+            a = u.x, b = u.y + 1;
+            if (a >= n || b >= m || a < 0 || b < 0 || st[pos(a, b)] || g[a][b] == '1')
+                continue;
+            q.push({a, b});
+            pa = find(pos(u.x, u.y), fa3), pb = find(pos(a, b), fa3);
+            if (pa != pb)
+                fa3[pb] = pa;
         }
     }
+}
+
+int main()
+{
+    iosf;
+    cin >> n >> m;
+
+    for (int i = 1; i <= N * N; i++)
+        fa1[i] = fa2[i] = fa3[i] = i;
+
+    for (int i = 0; i < 4; i++)
+        scanf("%s", g[i]);
+
+    for (int k = 1; k <= 3; k++) {
+        memset(st, 0, sizeof st);
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                if (!st[pos(i, j)] && g[i][j] == '0')
+                    bfs(i, j, k);
+    }
+
+    cin >> q;
+    while (q--) {
+        int t, x1, y1, x2, y2;
+        cin >> t >> x1 >> y1 >> x2 >> y2;
+        x1--, y1--, x2--, y2--;
+        if (t == 1) {
+            int pa = find(pos(x1, y1), fa1), pb = find(pos(x2, y2), fa1);
+            if (pa == pb)
+                cout << "Y" << endl;
+            else
+                cout << "N" << endl;
+        } else if (t == 2) {
+            int pa = find(pos(x1, y1), fa2), pb = find(pos(x2, y2), fa2);
+            if (pa == pb)
+                cout << "Y" << endl;
+            else
+                cout << "N" << endl;
+        } else {
+            int pa = find(pos(x1, y1), fa3), pb = find(pos(x2, y2), fa3);
+            if (pa == pb)
+                cout << "Y" << endl;
+            else
+                cout << "N" << endl;
+        }
+    }
+
+    return 0;
 }

@@ -1,5 +1,5 @@
 /*
-  Problem Name:
+  Problem Name:White Pawn
   algorithm tag:
 */
 
@@ -25,13 +25,3 @@ typedef pair<ll, ll> pll;
 //#define x first
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
-
-int a[15];
-
-int main()
-{
-    for (int i = 1; i <= 10; i++)
-        cin >> a[i];
-
-    for ()
-}

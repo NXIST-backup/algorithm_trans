@@ -26,7 +26,7 @@ typedef pair<ll, ll> pll;
 #define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 505, M = N * N + N;
+const int N = 20, M = N * N + N;
 
 int n, m, q;
 int fa1[M], fa2[M], fa3[M];
@@ -78,25 +78,25 @@ void bfs(int x, int y, int t)
                 fa2[pb] = pa;
         } else {
             int a = u.x + 1, b = u.y;
-            if (a >= n || b >= m || a < 0 || b < 0 || g[a][b] == '1')
-                continue;
-            if (!st[pos(a, b)]) {
-                q.push({a, b});
-                st[pos(a, b)] = 1;
+            if (a < n && b < m && a >= 0 && b >= 0 && g[a][b] != '1') {
+                if (!st[pos(a, b)]) {
+                    q.push({a, b});
+                    st[pos(a, b)] = 1;
+                }
+                int pa = find(pos(u.x, u.y), fa3), pb = find(pos(a, b), fa3);
+                if (pa != pb)
+                    fa3[pb] = pa;
             }
-            int pa = find(pos(u.x, u.y), fa3), pb = find(pos(a, b), fa3);
-            if (pa != pb)
-                fa3[pb] = pa;
             a = u.x, b = u.y + 1;
-            if (a >= n || b >= m || a < 0 || b < 0 || g[a][b] == '1')
-                continue;
-            if (!st[pos(a, b)]) {
-                q.push({a, b});
-                st[pos(a, b)] = 1;
+            if (a < n && b < m && a >= 0 && b >= 0 && g[a][b] != '1') {
+                if (!st[pos(a, b)]) {
+                    q.push({a, b});
+                    st[pos(a, b)] = 1;
+                }
+                int pa = find(pos(u.x, u.y), fa3), pb = find(pos(a, b), fa3);
+                if (pa != pb)
+                    fa3[pb] = pa;
             }
-            pa = find(pos(u.x, u.y), fa3), pb = find(pos(a, b), fa3);
-            if (pa != pb)
-                fa3[pb] = pa;
         }
     }
 }
@@ -118,6 +118,7 @@ int main()
                 if (!st[pos(i, j)] && g[i][j] == '0')
                     bfs(i, j, k);
     }
+
     cin >> q;
     while (q--) {
         int t, x1, y1, x2, y2;

@@ -38,8 +38,8 @@ int state[N][M];
 int dist[VV];
 void del_circu(int x, int y)
 {
-    for (int i = min(x - R, 0); i <= min(x + R, n); i++) {
-        for (int j = min(y - R, 0); j <= min(y + R, m); j++) {
+    for (int i = max(x - R, 0); i <= min(x + R, n); i++) {
+        for (int j = max(y - R, 0); j <= min(y + R, m); j++) {
             double x1 = double(i), y1 = double(j);
             if (sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y)) - R <= eps)
                 st[i][j] = true;

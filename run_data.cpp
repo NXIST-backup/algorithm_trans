@@ -33,16 +33,17 @@ void fanfa2(vector<int> &number, int t, int sum)
     }
     number.push_back(sum);
 }
-
 int main()
 {
     freopen("1.in", "w", stdout);
     srand((unsigned)time(0));
 
-    int n = 1e4;
+    int n = 1e6;
     cout << n << endl;
+    int m = 1e8;
     for (int i = 1; i <= n; i++) {
-        cout << i << " ";
+        int t = rand() % m + 1;
+        cout << t << " ";
     }
     fclose(stdin);
     fclose(stdout);

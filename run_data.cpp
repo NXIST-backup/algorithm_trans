@@ -38,13 +38,24 @@ int main()
     freopen("1.in", "w", stdout);
     srand((unsigned)time(0));
 
-    int n = 1e6;
+    int n = 1000000;
     cout << n << endl;
-    int m = 1e8;
+    int m = 100;
     for (int i = 1; i <= n; i++) {
-        int t = rand() % m + 1;
-        cout << t << " ";
+        int k = rand() % m + 1;
+        string s;
+        for (int j = 1; j <= k; j++) {
+            int flag = rand() % 2 + 1;
+            char c;
+            if (flag == 1)
+                c = rand() % 26 + 65;
+            else
+                c = rand() % 26 + 97;
+            s.push_back(c);
+        }
+        cout << s << endl;
     }
+
     fclose(stdin);
     fclose(stdout);
     return 0;

@@ -1,110 +1,69 @@
-/*
-  Problem Name:
-  algorithm tag:
-*/
+#include <stdio.h>
+#include <string.h>
 
-#include <algorithm>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <unordered_map>
-#include <vector>
+char g[105][105];
 
-using namespace std;
-
-typedef long long ll;
-typedef unsigned long long ull;
-const int INF = 0x3f3f3f3f;
-const int mod = 1e9 + 7;
-const double eps = 1e-4;
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
-//#define x first
-//#define y second
-#define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
-
-struct TreeNode
+int dx[8] = {1, 1, -1, -1, 2, 2, -2, -2};
+int dy[8] = {2, -2, 2, -2, 1, -1, 1, -1};
+int n, m;
+int x1, x2, y1, y2;
+int st[105][105];
+int flag;
+struct Q
 {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
-
-class Solution
+    int x, y;
+} q[20005];
+int main()
 {
-  public:
-    map<TreeNode *, int> col;
-    map<TreeNode *, int> row;
-    map<int, vector<TreeNode *>> lis;
-    vector<vector<int>> verticalTraversal(TreeNode *root)
-    {
-        queue<TreeNode *> q;
-        q.push(root);
-        col[root] = 0;
-        row[root] = 0;
-        lis[0].push_back(root);
-        while (q.size()) {
-            auto t = q.front();
-            q.pop();
+    while (scanf("%d%d%d", &n, &m) != EOF) {
+        flag = 0;
+        memset(st, 0, sizeof st);
+        for (int i = 0; i < m; i++)
+            scanf("%s", g[i]);
 
-            auto lnode = t->left;
-            auto rnode = t->right;
-
-            if (lnode != NULL) {
-                col[lnode] = col[t] - 1;
-                row[lnode] = row[t] + 1;
-                q.push(lnode);
-                vector<TreeNode *> tmp;
-                while (!lis[col[lnode]].empty()) {
-                    auto t = lis[col[lnode]].back();
-                    if (row[t] != row[lnode] || t->val <= lnode->val)
-                        break;
-                    if (t->val > lnode->val) {
-                        tmp.push_back(t);
-                        lis[col[lnode]].pop_back();
-                    }
-                }
-                lis[col[lnode]].push_back(lnode);
-                for (int i = tmp.size() - 1; i >= 0; i--)
-                    lis[col[lnode]].push_back(tmp[i]);
-            }
-            if (rnode != NULL) {
-                col[rnode] = col[t] + 1;
-                row[rnode] = row[t] + 1;
-                q.push(rnode);
-                vector<TreeNode *> tmp;
-                while (!lis[col[rnode]].empty()) {
-                    auto t = lis[col[rnode]].back();
-                    if (row[t] != row[rnode] || t->val <= rnode->val)
-                        break;
-                    if (t->val > rnode->val) {
-                        tmp.push_back(t);
-                        lis[col[rnode]].pop_back();
-                    }
-                }
-                lis[col[rnode]].push_back(rnode);
-                for (int i = tmp.size() - 1; i >= 0; i--)
-                    lis[col[rnode]].push_back(tmp[i]);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (g[i][j] == 's')
+                    x1 = i, y1 = j;
+                if (g[i][j] == 'e')
+                    x2 = i, y2 = j;
             }
         }
-        vector<pair<int, vector<int>>> list;
-        vector<vector<int>> ans;
-        for (auto item : lis) {
-            vector<int> tmp;
-            for (auto v : item.second)
-                tmp.push_back(v->val);
-            list.push_back({item.first, tmp});
-        }
-        sort(list.begin(), list.end());
 
-        for (auto item : list)
-            ans.push_back(item.second);
-        return ans;
+        int ss = 0, tt = 0;
+        q[tt].x = x1;
+        q[tt].y = y1;
+        st[x1][y1] = 1;
+
+        while (ss <= tt) {
+            int x = q[ss].x;
+            int y = q[ss++].y;
+
+            if (x == x2 && y == y2) {
+                flag = 1;
+                break;
+            }
+
+            for (int i = 0; i < 8; i++) {
+                int a = x + dx[i], b = y + dy[i];
+                if (dx[i] == 2 && g[x + 1][y] == '#')
+                    continue;
+                if (dx[i] == -2 && g[x - 1][y] == '#')
+                    continue;
+                if (dy[i] == 2 && g[x][y + 1] == '#')
+                    continue;
+                if (dy[i] == -2 && g[x][y - 1] == '#')
+                    continue;
+                if (a < 0 || a >= m || b < 0 || b >= n || g[a][b] == '#' || st[a][b])
+                    continue;
+                st[a][b] = st[x][y] + 1;
+                q[++tt].x = a;
+                q[tt].y = b;
+            }
+        }
+        if (flag)
+            printf("%d\n", st[x2][y2] - 1);
+        else
+            printf("-1\n");
     }
-};
+}

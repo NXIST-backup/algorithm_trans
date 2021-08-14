@@ -1,69 +1,65 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-char g[105][105];
+const int INF = 0x3f3f3f3f;
 
-int dx[8] = {1, 1, -1, -1, 2, 2, -2, -2};
-int dy[8] = {2, -2, 2, -2, 1, -1, 1, -1};
-int n, m;
-int x1, x2, y1, y2;
-int st[105][105];
-int flag;
-struct Q
+const int N = 2505, M = 6205;
+
+int n, m, start, end;
+int h[N], e[M], ne[M], w[M], idx;
+int dist[N];
+int st[N];
+int q[N];
+void add(int a, int b, int c)
 {
-    int x, y;
-} q[20005];
+    e[idx] = b;
+    w[idx] = c;
+    ne[idx] = h[a];
+    h[a] = idx++;
+}
+int spfa()
+{
+    memset(dist, 0x3f, sizeof dist);
+    dist[start] = 0;
+    int ss = 0, tt = 0;
+    q[tt] = start;
+    st[start] = 1;
+    while (ss <= tt) {
+        int t = q[ss++];
+
+        st[t] = 0;
+
+        for (int i = h[t]; ~i; i = ne[i]) {
+            int j = e[i];
+            if (dist[j] > dist[t] + w[i]) {
+                dist[j] = dist[t] + w[i];
+                if (!st[j]) {
+                    q[++tt] = j;
+                    st[j] = 1;
+                }
+            }
+        }
+    }
+
+    if (dist[end] == 0x3f3f3f3f)
+        return -1;
+    else
+        return dist[end];
+}
 int main()
 {
-    while (scanf("%d%d%d", &n, &m) != EOF) {
-        flag = 0;
-        memset(st, 0, sizeof st);
-        for (int i = 0; i < m; i++)
-            scanf("%s", g[i]);
+    memset(h, -1, sizeof h);
+    scanf("%d%d%d%d", &n, &m, &start, &end);
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (g[i][j] == 's')
-                    x1 = i, y1 = j;
-                if (g[i][j] == 'e')
-                    x2 = i, y2 = j;
-            }
-        }
-
-        int ss = 0, tt = 0;
-        q[tt].x = x1;
-        q[tt].y = y1;
-        st[x1][y1] = 1;
-
-        while (ss <= tt) {
-            int x = q[ss].x;
-            int y = q[ss++].y;
-
-            if (x == x2 && y == y2) {
-                flag = 1;
-                break;
-            }
-
-            for (int i = 0; i < 8; i++) {
-                int a = x + dx[i], b = y + dy[i];
-                if (dx[i] == 2 && g[x + 1][y] == '#')
-                    continue;
-                if (dx[i] == -2 && g[x - 1][y] == '#')
-                    continue;
-                if (dy[i] == 2 && g[x][y + 1] == '#')
-                    continue;
-                if (dy[i] == -2 && g[x][y - 1] == '#')
-                    continue;
-                if (a < 0 || a >= m || b < 0 || b >= n || g[a][b] == '#' || st[a][b])
-                    continue;
-                st[a][b] = st[x][y] + 1;
-                q[++tt].x = a;
-                q[tt].y = b;
-            }
-        }
-        if (flag)
-            printf("%d\n", st[x2][y2] - 1);
-        else
-            printf("-1\n");
+    while (m--) {
+        int a, b, c;
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c), add(b, a, c);
     }
+
+    int t = spfa();
+
+    printf("%d\n", t);
+    return 0;
 }

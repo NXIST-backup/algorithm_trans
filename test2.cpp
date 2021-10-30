@@ -25,10 +25,37 @@ typedef pair<ll, ll> pll;
 //#define x first
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
-char a[103];
 
-int main()
+struct TreeNode
 {
-    scanf("%s", a);
-    printf("%s", a);
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+int ans = 0;
+int depth[30], dp[30];
+int eating(TreeNode *root)
+{
+    queue<pair<TreeNode *, int>> q;
+    depth[1] = root->val;
+    q.push({root, 1});
+    while (q.size()) {
+        auto t = q.front();
+        q.pop();
+        depth[t.second] += t.first->val;
+        if (!root->left)
+            q.push({root->left, t.second + 1});
+        if (!root->right)
+            q.push({root->right, t.second + 1});
+    }
+    int ans = 0;
+    int res = 0;
+    for (int i = 1; i <= 28; i += 2)
+        ans += depth[i];
+    for (int i = 2; i <= 28; i += 2)
+        res += depth[i];
+    ans = max(res, ans);
+    return ans;
 }

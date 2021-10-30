@@ -1,74 +1,59 @@
-#include <stdio.h>
-#include <stdlib.h>
+/*
+  Problem Name:
+  algorithm tag:
+*/
 
-typedef struct Node
-{
-    int data;
-    struct Node *next;
-} Node, *LinkedList;
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <stack>
+#include <unordered_map>
+#include <vector>
+using namespace std;
 
-LinkedList insert(LinkedList head, Node *node, int index)
+typedef long long ll;
+typedef unsigned long long ull;
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9 + 7;
+const double eps = 1e-4;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+//#define x first
+//#define y second
+#define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
+class Solution
 {
-    if (head == NULL) {
-        if (index != 0) {
-            return printf("failed\n");
+  public:
+    vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2)
+    {
+        int q[1005] = {0};
+        int hh = 0, tt = -1;
+        vector<int> ans;
+        map<int, int> mp;
+        for (int i = 0; i < nums2.size(); i++) {
+            while (hh <= tt && nums2[i] > nums2[q[tt]])
+                mp[nums2[q[tt]]] = nums2[i], tt--;
+            q[++tt] = i;
         }
-    }
-    if (index == 0) {
-        node->next = head;
-        head = node;
-        return printf("success\n");
-    }
-    Node *current_node = head;
-    int count = 0;
-    while (current_node != NULL && count < index - 1) {
-        current_node = current_node->next;
-        count++;
-    }
-    if (count == index - 1) {
-        node->next = current_node->next;
-        current_node->next = node;
-    }
-    return printf("success\n");
-}
+        while (hh <= tt)
+            mp[nums2[q[tt]]] = -1, tt--;
 
-void output(LinkedList head)
-{
-    if (head == NULL) {
-        return;
+        for (int i = 0; i < nums1.size(); i++)
+            ans.push_back(mp[nums1[i]]);
+        return ans;
     }
-    Node *current_node = head;
-    while (current_node != NULL) {
-        printf("%d", current_node->data);
-        current_node = current_node->next;
-    }
-    printf("\n");
-}
-
-void clear(LinkedList head)
-{
-    Node *current_node = head;
-    while (current_node != NULL) {
-        Node *delete_node = current_node;
-        current_node = current_node->next;
-        free(delete_node);
-    }
-}
-
+};
 int main()
 {
-    LinkedList linkedlist = NULL;
-    int n;
-    scanf("%d", &n);
-    int p, q;
-    for (int i = 0; i < n; i++) {
-        scanf("%d%d", &p, &q);
-        Node *node = (Node *)malloc(sizeof(Node));
-        node->data = q;
-        node->next = NULL;
-        linkedlist = insert(linkedlist, node, p);
-    }
-    output(linkedlist);
-    clear(linkedlist);
-    return 0;
+    vector<int> a = {2, 4};
+    vector<int> b = {1, 2, 3, 4};
+    Solution s;
+    auto t = s.nextGreaterElement(a, b);
+    for (auto item : t)
+        cout << item << " ";
+    cout << endl;
 }

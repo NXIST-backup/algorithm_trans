@@ -38,23 +38,27 @@ int main()
     freopen("1.in", "w", stdout);
     srand((unsigned)time(0));
 
-    int n = 1000000;
+    int n = 100000;
     cout << n << endl;
-    int m = 100;
-    for (int i = 1; i <= n; i++) {
-        int k = rand() % m + 1;
-        string s;
-        for (int j = 1; j <= k; j++) {
-            int flag = rand() % 2 + 1;
-            char c;
-            if (flag == 1)
-                c = rand() % 26 + 65;
-            else
-                c = rand() % 26 + 97;
-            s.push_back(c);
-        }
-        cout << s << endl;
-    }
+    for (int i = 0; i < n; i++)
+        cout << 'b';
+    cout << endl;
+
+    // int m = 100;
+    // for (int i = 1; i <= n; i++) {
+    //     int k = rand() % m + 1;
+    //     string s;
+    //     for (int j = 1; j <= k; j++) {
+    //         int flag = rand() % 2 + 1;
+    //         char c;
+    //         if (flag == 1)
+    //             c = rand() % 26 + 65;
+    //         else
+    //             c = rand() % 26 + 97;
+    //         s.push_back(c);
+    //     }
+    //     cout << s << endl;
+    // }
 
     fclose(stdin);
     fclose(stdout);

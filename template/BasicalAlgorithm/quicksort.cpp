@@ -17,9 +17,6 @@ void quicksort(int *a, int l, int r)
         if (i < j)
             swap(a[i], a[j]);
     }
-    // for (int i = l; i <= r;i++)
-    //     cout << a[i] << " ";
-    // cout << endl;
     quicksort(a, l, j);
     quicksort(a, j + 1, r);
 }

@@ -26,22 +26,9 @@ typedef pair<ll, ll> pll;
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-class Solution
-{
-  public:
-    int removePalindromeSub(string s)
-    {
-        string rs = s;
-        reverse(s.begin(), s.end());
-        if (s == rs)
-            return 1;
-        else
-            return 2;
-    }
-};
 int main()
 {
-    Solution s;
-    string das = "dsa";
-    cout << s.removePalindromeSub(das) << endl;
+    int a = 10;
+    int b = ~a;
+    cout << b << endl;
 }

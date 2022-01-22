@@ -10,9 +10,9 @@
 #include <iostream>
 #include <map>
 #include <queue>
-#include <stack>
 #include <unordered_map>
 #include <vector>
+
 using namespace std;
 
 typedef long long ll;
@@ -25,35 +25,38 @@ typedef pair<ll, ll> pll;
 //#define x first
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
+
 class Solution
 {
   public:
-    vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2)
+    int largestSumAfterKNegations(vector<int> &nums, int k)
     {
-        int q[1005] = {0};
-        int hh = 0, tt = -1;
-        vector<int> ans;
-        map<int, int> mp;
-        for (int i = 0; i < nums2.size(); i++) {
-            while (hh <= tt && nums2[i] > nums2[q[tt]])
-                mp[nums2[q[tt]]] = nums2[i], tt--;
-            q[++tt] = i;
+        int ans = 0;
+        vector<int> neg, pos;
+        sort(nums.begin(), nums.end());
+        for (auto i : nums) {
+            if (i >= 0)
+                pos.push_back(i);
+            else
+                neg.push_back(i);
         }
-        while (hh <= tt)
-            mp[nums2[q[tt]]] = -1, tt--;
+        for (auto i : neg) {
+            if (k)
+                ans += -i, k--;
+            else
+                ans += i;
+        }
+        for (auto i : pos)
+            ans += i;
 
-        for (int i = 0; i < nums1.size(); i++)
-            ans.push_back(mp[nums1[i]]);
-        return ans;
+        if (k && k % 2) {
+            if (neg.size() == 0)
+                return ans -= 2 * pos[0];
+            if (pos.size() == 0)
+                return ans -= 2 * neg.back();
+            if (neg.size() && pos.size()) {
+                return ans -= 2 * abs(neg.back()) > pos[0] ? pos[0] : abs(neg.back());
+            }
+        }
     }
 };
-int main()
-{
-    vector<int> a = {2, 4};
-    vector<int> b = {1, 2, 3, 4};
-    Solution s;
-    auto t = s.nextGreaterElement(a, b);
-    for (auto item : t)
-        cout << item << " ";
-    cout << endl;
-}

@@ -26,36 +26,43 @@ typedef pair<ll, ll> pll;
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-struct TreeNode
-{
-    int val;
-    struct TreeNode *left;
-    struct TreeNode *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-};
+const int N = 505;
 
-int ans = 0;
-int depth[30], dp[30];
-int eating(TreeNode *root)
+int a[N], b[N];
+
+int main()
 {
-    queue<pair<TreeNode *, int>> q;
-    depth[1] = root->val;
-    q.push({root, 1});
-    while (q.size()) {
-        auto t = q.front();
-        q.pop();
-        depth[t.second] += t.first->val;
-        if (!root->left)
-            q.push({root->left, t.second + 1});
-        if (!root->right)
-            q.push({root->right, t.second + 1});
+    char c;
+    scanf("%c", &c);
+    int idx = 1;
+    while (true) {
+        scanf("[%d,%d]", &a[idx], &b[idx]);
+        scanf("%c", &c);
+        if (c == ']')
+            break;
+        scanf("%c", &c);
+        idx++;
     }
-    int ans = 0;
-    int res = 0;
-    for (int i = 1; i <= 28; i += 2)
-        ans += depth[i];
-    for (int i = 2; i <= 28; i += 2)
-        res += depth[i];
-    ans = max(res, ans);
-    return ans;
+    vector<pii> samex;
+
+    for (int i = 1; i <= idx; i++) {
+        for (int j = i + 1; j <= idx; j++) {
+            if (a[i] == a[j])
+                samex.push_back({i, j});
+        }
+    }
+    int ans = 0x3f3f3f3f;
+    for (int i = 0; i < samex.size(); i++) {
+        for (int j = i + 1; j < samex.size(); j++) {
+            int x1 = samex[i].first, y1 = samex[i].second;
+            int x2 = samex[j].first, y2 = samex[j].second;
+            if ((b[x1] == b[x2] && b[y1] == b[y2])) {
+                ans = min(ans, (abs(b[x1] - b[y1]) * abs(a[x1] - a[x2])));
+            } else if (b[x1] == b[y2] && b[y1] == b[x2]) {
+                ans = min(ans, (abs(b[x1] - b[y1]) * abs(a[x1] - a[y2])));
+            }
+        }
+    }
+
+    cout << ans << endl;
 }

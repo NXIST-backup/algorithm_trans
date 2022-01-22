@@ -29,19 +29,19 @@ typedef pair<ll, ll> pll;
 class Solution
 {
   public:
-    int removePalindromeSub(string s)
+    vector<int> g[66000];
+
+    vector<int> grayCode(int n)
     {
-        string rs = s;
-        reverse(s.begin(), s.end());
-        if (s == rs)
-            return 1;
-        else
-            return 2;
+        int num = 1 << n;
+
+        for (int i = 0; i < num; i++) {
+            int idx = 0;
+            while (1 << idx < num) {
+                g[i].push_back(i & 1 << idx);
+                g[i & (1 << idx)].push_back(i);
+                idx++;
+            }
+        }
     }
 };
-int main()
-{
-    Solution s;
-    string das = "dsa";
-    cout << s.removePalindromeSub(das) << endl;
-}

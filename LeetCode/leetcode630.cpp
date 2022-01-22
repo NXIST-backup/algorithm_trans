@@ -1,5 +1,5 @@
 /*
-  Problem Name:课程表Ⅲ  
+  Problem Name:课程表Ⅲ
   algorithm tag:最长上升子序列，贪心
 */
 
@@ -24,41 +24,51 @@ bool cmp(pair<int, int> a, pair<int, int> b)
 {
     if (a.second < b.second)
         return true;
+    else if (a.second == b.second)
+        return a.first < b.first;
     else
         return false;
 }
+class Solution
+{
+  public:
+    int dp[10005];
+    pair<int, int> w[10005];
+    int scheduleCourse(vector<vector<int>> &courses)
+    {
+        w[0] = {0, 0};
+        memset(dp, 0, sizeof dp);
+        int m = 0;
+        int n = 0;
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses[i][0] <= courses[i][1])
+                w[i + 1] = {courses[i][0], courses[i][1]}, n++;
+            m = max(m, courses[i][1]);
+        }
+        sort(w + 1, w + 1 + n, cmp);
+        for (int i = 1; i <= n; i++)
+            for (int j = w[i].second; j >= w[i].first; j--)
+                dp[j] = max(dp[j], dp[j - w[i].first] + 1);
 
-vector<pii> a;
+        int ans = 0;
+        for (int i = 0; i <= m; i++)
+            ans = max(ans, dp[i]);
 
+        return ans;
+    }
+};
 int main()
 {
-    for (int i = 1; i <= 8; i++) {
-        int x, y;
-        cin >> x >> y;
-        a.push_back({x, y});
-    }
-
-    sort(a.begin(), a.end(), cmp);
-
-    int sum = 0;
-    priority_queue<int, vector<int>, less<int>> heap;
-    int cur = 0;
-    int ans = 0;
-    for (auto item : a) {
-        if (item.first + sum <= item.second) {
-            ans++;
-            heap.push(item.first);
-            sum += item.first;
-            cur = item.second;
-        } else {
-            if (item.second - (sum - heap.top()) - item.first > cur - sum) {
-                sum -= heap.top();
-                heap.pop();
-                sum += item.first;
-                cur = item.second;
-                heap.push(item.first);
-            }
-        }
-    }
-    cout << ans << endl;
+    vector<vector<int>> a = {{7, 16},
+                             {2, 3},
+                             {3, 12},
+                             {3, 14},
+                             {10, 19},
+                             {10, 16},
+                             {6, 8},
+                             {6, 11},
+                             {3, 13},
+                             {6, 16}};
+    Solution s;
+    cout << s.scheduleCourse(a) << endl;
 }

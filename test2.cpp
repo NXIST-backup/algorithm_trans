@@ -10,6 +10,7 @@
 #include <iostream>
 #include <map>
 #include <queue>
+#include <set>
 #include <unordered_map>
 #include <vector>
 
@@ -26,43 +27,17 @@ typedef pair<ll, ll> pll;
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-const int N = 505;
-
-int a[N], b[N];
-
+set<pair<int, string>> st;
+unordered_map<string, int> mp;
 int main()
 {
-    char c;
-    scanf("%c", &c);
-    int idx = 1;
-    while (true) {
-        scanf("[%d,%d]", &a[idx], &b[idx]);
-        scanf("%c", &c);
-        if (c == ']')
-            break;
-        scanf("%c", &c);
-        idx++;
-    }
-    vector<pii> samex;
+    st.insert({3, "#21"});
+    st.insert({1, "32131"});
+    st.insert({1, "3213"});
 
-    for (int i = 1; i <= idx; i++) {
-        for (int j = i + 1; j <= idx; j++) {
-            if (a[i] == a[j])
-                samex.push_back({i, j});
-        }
-    }
-    int ans = 0x3f3f3f3f;
-    for (int i = 0; i < samex.size(); i++) {
-        for (int j = i + 1; j < samex.size(); j++) {
-            int x1 = samex[i].first, y1 = samex[i].second;
-            int x2 = samex[j].first, y2 = samex[j].second;
-            if ((b[x1] == b[x2] && b[y1] == b[y2])) {
-                ans = min(ans, (abs(b[x1] - b[y1]) * abs(a[x1] - a[x2])));
-            } else if (b[x1] == b[y2] && b[y1] == b[x2]) {
-                ans = min(ans, (abs(b[x1] - b[y1]) * abs(a[x1] - a[y2])));
-            }
-        }
-    }
+    auto t = *(st.begin());
+    cout << t.first << " " << t.second << endl;
 
-    cout << ans << endl;
+    auto t = *(st.begin());
+    cout << t.first << " " << t.second << endl;
 }

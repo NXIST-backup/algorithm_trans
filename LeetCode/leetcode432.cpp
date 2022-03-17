@@ -10,7 +10,6 @@
 #include <iostream>
 #include <map>
 #include <queue>
-#include <set>
 #include <unordered_map>
 #include <vector>
 
@@ -35,7 +34,6 @@ class AllOne
     AllOne()
     {
     }
-
     void inc(string key)
     {
         st.erase({mp[key], key});
@@ -62,17 +60,18 @@ class AllOne
 
     string getMinKey()
     {
-        if (st.emd)
+        if (st.empty())
+            return "";
+        else
             return (*st.begin()).second;
     }
 };
 
-int main()
-{
-    auto allone = new AllOne;
-    allone->inc("hello");
-    allone->inc("hello");
-    cout << allone->getMaxKey() << endl;
-    auto t = *(--allone->st.end());
-    cout << t.first << " " << t.second << endl;
-}
+/**
+ * Your AllOne object will be instantiated and called as such:
+ * AllOne* obj = new AllOne();
+ * obj->inc(key);
+ * obj->dec(key);
+ * string param_3 = obj->getMaxKey();
+ * string param_4 = obj->getMinKey();
+ */

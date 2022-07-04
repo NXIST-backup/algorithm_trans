@@ -27,52 +27,10 @@ typedef pair<ll, ll> pll;
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
 
-class AllOne
-{
-  public:
-    unordered_map<string, int> mp;
-    set<pair<int, string>> st;
-    AllOne()
-    {
-    }
-
-    void inc(string key)
-    {
-        st.erase({mp[key], key});
-        mp[key]++;
-        st.insert({mp[key], key});
-    }
-
-    void dec(string key)
-    {
-        st.erase({mp[key], key});
-        mp[key]--;
-        if (mp[key] > 0) {
-            st.insert({mp[key], key});
-        }
-    }
-
-    string getMaxKey()
-    {
-        if (st.empty())
-            return "";
-        else
-            return (*--st.end()).second;
-    }
-
-    string getMinKey()
-    {
-        if (st.emd)
-            return (*st.begin()).second;
-    }
-};
+const string input = "abc";
 
 int main()
 {
-    auto allone = new AllOne;
-    allone->inc("hello");
-    allone->inc("hello");
-    cout << allone->getMaxKey() << endl;
-    auto t = *(--allone->st.end());
-    cout << t.first << " " << t.second << endl;
+    static const string s = input;
+    cout << input << endl;
 }

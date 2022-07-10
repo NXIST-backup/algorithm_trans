@@ -25,3 +25,17 @@ typedef pair<ll, ll> pll;
 //#define x first
 //#define y second
 #define iosf ios::sync_with_stdio(false), cin.tie(0), cout << fixed
+
+int64_t foo(int32_t *lhs, int64_t *rhs)
+{
+    *lhs = 10;
+    *rhs = 20;
+    return *lhs + *rhs;
+}
+
+int main()
+{
+    int32_t a;
+    int64_t b;
+    cout << foo(&a, &b) << endl;
+}
